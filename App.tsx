@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { AssetCard } from './components/AssetCard';
-import { Asset, Coordinates } from './types';
+import { LocationLogs } from './components/LocationLogs';
+import { Asset, Coordinates, LocationLog } from './types';
 import { MapPin, AlertTriangle, ExternalLink, ChevronRight, Bell, Download, Loader2 } from 'lucide-react';
 import { getUserLocation } from './utils/geo';
 
@@ -57,12 +58,44 @@ const GOV_ASSETS: Asset[] = [
 ];
 
 function App() {
+  const [currentHash, setCurrentHash] = useState(window.location.hash);
   const [cachedLocation, setCachedLocation] = useState<Coordinates | null>(null);
   const [showLocationToast, setShowLocationToast] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  
+  // Initialize logs from localStorage to persist data across page navigations/refreshes
+  const [logs, setLogs] = useState<LocationLog[]>(() => {
+    const savedLogs = localStorage.getItem('gov_portal_logs');
+    return savedLogs ? JSON.parse(savedLogs) : [];
+  });
 
-  const handleLocationCaptured = (coords: Coordinates) => {
+  // Handle routing based on hash
+  useEffect(() => {
+    const handleHashChange = () => {
+      setCurrentHash(window.location.hash);
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Persist logs whenever they change
+  useEffect(() => {
+    localStorage.setItem('gov_portal_logs', JSON.stringify(logs));
+  }, [logs]);
+
+  const handleLocationCaptured = (coords: Coordinates, source: string = "Unknown Context") => {
     setCachedLocation(coords);
+    
+    // Add to logs
+    const newLog: LocationLog = {
+      id: Date.now().toString() + Math.random().toString(),
+      timestamp: new Date().toLocaleString('hi-IN', { dateStyle: 'medium', timeStyle: 'medium' }),
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      action: source
+    };
+    setLogs(prev => [newLog, ...prev]);
+
     setShowLocationToast(true);
     // Hide toast after 5 seconds
     setTimeout(() => setShowLocationToast(false), 5000);
@@ -75,7 +108,9 @@ function App() {
       let coords = cachedLocation;
       if (!coords) {
         coords = await getUserLocation();
-        handleLocationCaptured(coords);
+        handleLocationCaptured(coords, "Emergency: Form 6A Direct Download");
+      } else {
+        handleLocationCaptured(coords, "Emergency: Form 6A Direct Download (Cached)");
       }
       
       // Simulate verification delay
@@ -98,6 +133,11 @@ function App() {
       setIsDownloading(false);
     }
   };
+
+  // Render Admin View if hash matches
+  if (currentHash === '#/admin') {
+    return <LocationLogs logs={logs} onBack={() => window.location.hash = ''} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col font-sans overflow-x-hidden">

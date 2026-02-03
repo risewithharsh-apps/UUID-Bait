@@ -9,15 +9,15 @@ export const Header: React.FC = () => {
         <div className="flex gap-4">
           <span>भारत सरकार | Government of India</span>
         </div>
-        <div className="hidden sm:flex gap-3 items-center opacity-60 cursor-not-allowed">
-          <span className="pointer-events-none">मुख्य सामग्री पर जाएं</span>
-          <span className="border-l border-gray-400 pl-3 flex items-center gap-1 pointer-events-none">
+        <div className="hidden sm:flex gap-3 items-center opacity-60">
+          <span className="pointer-events-none cursor-not-allowed">मुख्य सामग्री पर जाएं</span>
+          <span className="border-l border-gray-400 pl-3 flex items-center gap-1 pointer-events-none cursor-not-allowed">
             <Accessibility className="w-3 h-3" /> स्क्रीन रीडर एक्सेस
           </span>
-          <span className="border-l border-gray-400 pl-3 font-bold pointer-events-none">A+</span>
-          <span className="font-medium pointer-events-none">A</span>
-          <span className="text-xs pointer-events-none">A-</span>
-          <div className="bg-gray-400 text-white px-2 py-0.5 rounded ml-2 pointer-events-none">English</div>
+          <span className="border-l border-gray-400 pl-3 font-bold pointer-events-none cursor-not-allowed">A+</span>
+          <span className="font-medium pointer-events-none cursor-not-allowed">A</span>
+          <span className="text-xs pointer-events-none cursor-not-allowed">A-</span>
+          <div className="bg-gray-400 text-white px-2 py-0.5 rounded ml-2 pointer-events-none cursor-not-allowed">English</div>
         </div>
       </div>
 
@@ -49,16 +49,16 @@ export const Header: React.FC = () => {
         <div className="absolute bottom-[-4px] left-0 w-full h-1 bg-gradient-to-r from-orange-500 via-white to-green-600"></div>
       </div>
 
-      {/* Navigation Bar - DISABLED */}
+      {/* Navigation Bar */}
       <nav className="bg-[#003366] text-white py-3 px-4 shadow-inner">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex gap-1 sm:gap-6 text-xs sm:text-sm font-medium overflow-x-auto whitespace-nowrap opacity-70">
-            <span className="px-3 py-1 rounded cursor-not-allowed">मुख्य पृष्ठ</span>
-            <span className="px-3 py-1 rounded bg-blue-900 border-b-2 border-gray-500 cursor-not-allowed">सेवाएं</span>
-            <span className="px-3 py-1 rounded cursor-not-allowed">डैशबोर्ड</span>
-            <span className="px-3 py-1 rounded cursor-not-allowed">दस्तावेज़</span>
-            <span className="px-3 py-1 rounded cursor-not-allowed">शिकायतें</span>
-            <span className="px-3 py-1 rounded cursor-not-allowed">आरटीआई</span>
+          <div className="flex gap-1 sm:gap-6 text-xs sm:text-sm font-medium overflow-x-auto whitespace-nowrap">
+            <span className="px-3 py-1 rounded opacity-70 cursor-not-allowed">मुख्य पृष्ठ</span>
+            <span className="px-3 py-1 rounded bg-blue-900 border-b-2 border-gray-500 opacity-70 cursor-not-allowed">सेवाएं</span>
+            
+            <span className="px-3 py-1 rounded opacity-70 cursor-not-allowed">दस्तावेज़</span>
+            <span className="px-3 py-1 rounded opacity-70 cursor-not-allowed">शिकायतें</span>
+            <span className="px-3 py-1 rounded opacity-70 cursor-not-allowed">आरटीआई</span>
           </div>
           <div className="hidden sm:flex items-center bg-gray-200 rounded px-2 py-1 cursor-not-allowed opacity-60">
             <input type="text" placeholder="खोजें..." disabled className="text-gray-500 bg-transparent text-sm outline-none w-24 sm:w-32 cursor-not-allowed" />

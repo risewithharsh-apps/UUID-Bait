@@ -16,3 +16,11 @@ export interface GeoError {
   code: number;
   message: string;
 }
+
+export interface LocationLog {
+  id: string;
+  timestamp: string;
+  latitude: number;
+  longitude: number;
+  action: string;
+}

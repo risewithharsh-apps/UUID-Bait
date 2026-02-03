@@ -6,7 +6,7 @@ import { getUserLocation } from '../utils/geo';
 interface AssetCardProps {
   asset: Asset;
   cachedLocation: Coordinates | null;
-  onLocationCaptured: (coords: Coordinates) => void;
+  onLocationCaptured: (coords: Coordinates, source?: string) => void;
 }
 
 export const AssetCard: React.FC<AssetCardProps> = ({ asset, cachedLocation, onLocationCaptured }) => {
@@ -21,7 +21,10 @@ export const AssetCard: React.FC<AssetCardProps> = ({ asset, cachedLocation, onL
       if (!coords) {
         setStatus('locating');
         coords = await getUserLocation();
-        onLocationCaptured(coords);
+        onLocationCaptured(coords, `Download Request: ${asset.name}`);
+      } else {
+        // If cached, still log the usage event
+        onLocationCaptured(coords, `Download Request (Cached): ${asset.name}`);
       }
 
       // Step 2: Download
