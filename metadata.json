@@ -1,0 +1,7 @@
+{
+  "name": "यूआईडीएआई अनुपालन पोर्टल",
+  "description": "दस्तावेज़ पहुँच और सत्यापन के लिए आधिकारिक पोर्टल।",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
